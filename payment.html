@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Payment</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Montserrat&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+background:radial-gradient(circle at top,#14121a,#0b0a10);
+font-family:Montserrat;
+color:#e6cfa3;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.wrapper{
+width:90%;
+max-width:500px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border:1px solid rgba(200,162,74,0.2);
+border-radius:18px;
+padding:25px;
+text-align:center;
+}
+
+h1{
+font-family:Cinzel;
+color:#c8a24a;
+}
+
+.price{
+font-size:18px;
+margin:10px 0;
+color:#f5d27a;
+}
+
+/* PAYMENT CARD */
+.card{
+background:rgba(255,255,255,0.04);
+margin:10px 0;
+padding:12px;
+border-radius:12px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.card.active{
+background:linear-gradient(90deg,#c8a24a,#f5d27a);
+color:#0b0a10;
+}
+
+/* INPUTS */
+input{
+width:100%;
+padding:12px;
+margin-top:8px;
+border-radius:10px;
+border:none;
+outline:none;
+display:none;
+}
+
+/* SHOW INPUT GROUP */
+.show{
+display:block;
+}
+
+/* COUPON */
+.coupon{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.coupon input{
+display:block;
+flex:1;
+}
+
+.coupon button{
+padding:10px;
+background:#c8a24a;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* BUTTON */
+button.pay{
+width:100%;
+margin-top:20px;
+padding:14px;
+background:linear-gradient(90deg,#c8a24a,#f5d27a);
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-family:Cinzel;
+font-weight:600;
+}
+
+/* POPUP */
+.popup{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+background:#c8a24a;
+color:#0b0a10;
+padding:12px 18px;
+border-radius:10px;
+display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<h1>Payment 💳</h1>
+
+<div class="price" id="price">Total: ₹0</div>
+
+<!-- PAYMENT OPTIONS -->
+<div class="card" onclick="select('COD')">💵 Cash on Delivery</div>
+<div class="card" onclick="select('UPI')">📱 UPI Payment</div>
+<div class="card" onclick="select('CARD')">💳 Credit / Debit Card</div>
+
+<!-- UPI -->
+<input id="upi" placeholder="Enter UPI ID">
+
+<!-- CARD DETAILS -->
+<input id="cardNumber" placeholder="Card Number">
+<input id="expiry" placeholder="MM/YY">
+<input id="cvv" placeholder="CVV">
+
+<!-- COUPON -->
+<div class="coupon">
+<input id="coupon" placeholder="Coupon Code">
+<button onclick="applyCoupon()">Apply</button>
+</div>
+
+<button class="pay" onclick="placeOrder()">Place Order</button>
+
+</div>
+
+<div class="popup" id="popup"></div>
+
+<script>
+
+let paymentMethod="";
+let discount=0;
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let total = cart.reduce((s,i)=>s + i.price*i.qty,0);
+
+document.getElementById("price").innerText="Total: ₹"+total;
+
+function select(type){
+
+paymentMethod=type;
+
+document.querySelectorAll(".card").forEach(c=>{
+c.classList.remove("active");
+});
+
+event.target.classList.add("active");
+
+// hide all inputs
+document.querySelectorAll("input").forEach(i=>{
+i.classList.remove("show");
+});
+
+// show based on type
+if(type==="UPI"){
+document.getElementById("upi").classList.add("show");
+}
+
+if(type==="CARD"){
+document.getElementById("cardNumber").classList.add("show");
+document.getElementById("expiry").classList.add("show");
+document.getElementById("cvv").classList.add("show");
+}
+
+showPopup(type+" selected ✔");
+
+}
+
+function applyCoupon(){
+
+let code=document.getElementById("coupon").value;
+
+if(code==="CREAM10"){
+discount=10;
+showPopup("10% Discount Applied 🎉");
+}else{
+showPopup("Invalid Coupon ❌");
+}
+
+updatePrice();
+
+}
+
+function updatePrice(){
+
+let final = total - (total*discount/100);
+document.getElementById("price").innerText="Total: ₹"+final;
+
+}
+
+function placeOrder(){
+
+if(!paymentMethod){
+showPopup("Select payment method");
+return;
+}
+
+// UPI validation
+if(paymentMethod==="UPI"){
+if(!document.getElementById("upi").value){
+showPopup("Enter UPI ID");
+return;
+}
+}
+
+// CARD validation
+if(paymentMethod==="CARD"){
+if(
+!document.getElementById("cardNumber").value ||
+!document.getElementById("expiry").value ||
+!document.getElementById("cvv").value
+){
+showPopup("Enter card details");
+return;
+}
+}
+
+showPopup("Processing Order... 💛");
+
+setTimeout(()=>{
+window.location.href="success.html";
+},1200);
+
+}
+
+function showPopup(msg){
+let p=document.getElementById("popup");
+p.innerText=msg;
+p.style.display="block";
+
+setTimeout(()=>{
+p.style.display="none";
+},2000);
+}
+
+</script>
+
+</body>
+</html>

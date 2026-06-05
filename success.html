@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Order Confirmed</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Montserrat&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+background:radial-gradient(circle at top,#14121a,#0b0a10);
+font-family:Montserrat;
+color:#e6cfa3;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+}
+
+.card{
+width:90%;
+max-width:500px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border:1px solid rgba(200,162,74,0.2);
+border-radius:18px;
+padding:25px;
+text-align:center;
+animation:fade 0.6s ease;
+}
+
+h1{
+font-family:Cinzel;
+color:#c8a24a;
+margin-bottom:10px;
+}
+
+.orderid{
+font-size:14px;
+opacity:0.8;
+margin-bottom:15px;
+}
+
+.box{
+background:rgba(255,255,255,0.03);
+padding:15px;
+border-radius:12px;
+margin:10px 0;
+text-align:left;
+}
+
+.box p{
+margin:5px 0;
+font-size:14px;
+}
+
+/* BUTTONS */
+.btns{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-family:Cinzel;
+font-weight:600;
+}
+
+.home{
+background:linear-gradient(90deg,#c8a24a,#f5d27a);
+}
+
+.whatsapp{
+background:#25D366;
+color:#0b0a10;
+}
+
+/* ANIMATION */
+@keyframes fade{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* CONFETTI */
+.confetti{
+position:absolute;
+width:8px;
+height:8px;
+background:#c8a24a;
+top:-10px;
+animation:fall 4s linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(360deg);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🎉 Order Confirmed</h1>
+
+<div class="orderid" id="oid"></div>
+
+<div class="box">
+<p><b>Status:</b> Confirmed ✔</p>
+<p><b>Note:</b> Your cake is being prepared with love 💛</p>
+<p><b>Delivery:</b> 30–40 mins</p>
+</div>
+
+<div class="btns">
+<button class="home" onclick="home()">back to Home</button>
+</div>
+
+</div>
+
+<script>
+
+// ORDER ID
+document.getElementById("oid").innerText =
+"Order ID: CR" + Math.floor(Math.random()*1000000);
+
+// HOME
+function home(){
+window.location.href="home.html";
+}
+
+
+
+// CONFETTI
+for(let i=0;i<40;i++){
+let c=document.createElement("div");
+c.classList.add("confetti");
+c.style.left=Math.random()*100+"vw";
+c.style.background=["#c8a24a","#f5d27a","#fff"][Math.floor(Math.random()*3)];
+c.style.animationDuration=(2+Math.random()*3)+"s";
+document.body.appendChild(c);
+}
+
+</script>
+
+</body>
+</html>

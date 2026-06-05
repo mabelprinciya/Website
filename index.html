@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creamora</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background: radial-gradient(circle at top, #111018, #07060c);
+font-family:'Montserrat', sans-serif;
+overflow:hidden;
+color:#c8a24a;
+}
+
+/* GOLD AMBIENT LIGHT */
+.glow{
+position:absolute;
+width:600px;
+height:600px;
+background: radial-gradient(circle, rgba(200,162,74,0.25), transparent 60%);
+filter:blur(60px);
+animation:float 6s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translate(-100px,-80px);}
+50%{transform:translate(100px,80px);}
+100%{transform:translate(-100px,-80px);}
+}
+
+.container{
+text-align:center;
+z-index:2;
+animation:fadeIn 1.5s ease;
+}
+
+/* LUXURY BRAND NAME */
+h1{
+font-size:90px;
+margin:0;
+letter-spacing:10px;
+font-family:'Cinzel', serif;
+color:#c8a24a;
+text-shadow:
+0 0 10px rgba(200,162,74,0.5),
+0 0 30px rgba(200,162,74,0.2);
+}
+
+/* SUB TEXT */
+p{
+margin-top:12px;
+font-size:15px;
+color:#d6c7a1;
+opacity:0.85;
+letter-spacing:1px;
+}
+
+/* GOLD PROGRESS BAR */
+.bar{
+width:280px;
+height:3px;
+background:rgba(255,255,255,0.08);
+margin:35px auto;
+border-radius:50px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+width:0%;
+background: linear-gradient(90deg, #8a6a1f, #f5d27a, #c8a24a);
+animation:load 3.2s ease forwards;
+box-shadow:0 0 20px rgba(200,162,74,0.6);
+}
+
+@keyframes load{
+0%{width:0%}
+100%{width:100%}
+}
+
+/* fade animation */
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(25px)}
+to{opacity:1; transform:translateY(0)}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="glow"></div>
+
+<div class="container">
+
+<h1>Creamora</h1>
+
+<p>Every cake has layers,But your smile is the best part of the shop</p>
+
+<div class="bar">
+<div class="fill"></div>
+</div>
+
+<p>Crafting your premium experience...</p>
+
+</div>
+
+<script>
+setTimeout(()=>{
+window.location.href="home.html";
+},3200);
+</script>
+
+</body>
+</html>
